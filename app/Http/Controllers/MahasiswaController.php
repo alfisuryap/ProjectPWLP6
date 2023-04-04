@@ -15,7 +15,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         //fungsi eloquent menampilkan data menggunakan pagination
-        $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
+        $mahasiswas = Mahasiswa::paginate(5); // Mengambil semua isi tabel
         $posts = Mahasiswa::orderBy('Nim', 'desc')->paginate(6);
         return view('mahasiswas.index', compact('mahasiswas'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -39,14 +39,17 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //melakukan validasi data
-            $request->validate([
-                'Nim' => 'required',
-                'Nama' => 'required',
-                'Kelas' => 'required',
-                'Jurusan' => 'required',
-                'No_Handphone' => 'required',
-            ]);
+    //melakukan validasi data
+        $request->validate([
+            'Nim' => 'required',
+            'Nama' => 'required',
+            'Kelas' => 'required',
+            'Jurusan' => 'required',
+            'No_Handphone' => 'required',
+            'Email' => 'required',
+            'Tanggal_Lahir' => 'required',
+        ]);
+
         //fungsi eloquent untuk menambah data
         Mahasiswa::create($request->all());
         
@@ -97,6 +100,8 @@ class MahasiswaController extends Controller
                 'Kelas' => 'required',
                 'Jurusan' => 'required',
                 'No_Handphone' => 'required',
+                'Email' => 'required',
+                'Tanggal_Lahir' => 'required',
             ]);
 
         //fungsi eloquent untuk mengupdate data inputan kita
@@ -119,5 +124,12 @@ class MahasiswaController extends Controller
             Mahasiswa::find($Nim)->delete();
             return redirect()->route('mahasiswas.index')
                 -> with('success', 'Mahasiswa Berhasil Dihapus');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $mahasiswas = Mahasiswa::where('Nama', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('mahasiswas.index', compact('mahasiswas'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 }

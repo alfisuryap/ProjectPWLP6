@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->string('Nim', 10)-> primary();
+            $table->string('Nama', 50);
             $table->string('Kelas', 10);
             $table->string('Jurusan', 50);
             $table->string('No_Handphone', 20);
