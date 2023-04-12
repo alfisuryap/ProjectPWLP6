@@ -27,9 +27,9 @@
                 <th>Nama</th>
                 <th>Kelas</th>
                 <th>Jurusan</th>
-                <th>No_Handphone</th>
+                <th>No Handphone</th>
                 <th>Email</th>
-                <th>Tanggal_Lahir</th>
+                <th>Tanggal Lahir</th>
                 <th width="280px">Action</th>
             </tr>
             @foreach ($mahasiswas as $Mahasiswa)
@@ -37,7 +37,7 @@
         
                 <td>{{ $Mahasiswa->Nim }}</td>
                 <td>{{ $Mahasiswa->Nama }}</td>
-                <td>{{ $Mahasiswa->Kelas }}</td>
+                <td>{{ $Mahasiswa->Kelas->nama_kelas }}</td>
                 <td>{{ $Mahasiswa->Jurusan }}</td>
                 <td>{{ $Mahasiswa->No_Handphone }}</td>
                 <td>{{ $Mahasiswa->Email }}</td>
